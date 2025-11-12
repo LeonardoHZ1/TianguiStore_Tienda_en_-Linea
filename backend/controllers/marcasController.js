@@ -23,8 +23,8 @@ async function obtenerMarcas(req, res) {
     const marcas = await marcaModel.obtenerMarcasActivas();
     return res.status(200).json(marcas);
   } catch (error) {
-    console.error("❌ Error al obtener marcas activas:", error);
-    return res.status(500).json({ message: "Error interno al obtener marcas." });
+    console.error("❌ Error al obtener las marcas activas:", error);
+    return res.status(500).json({ message: "Error interno al obtener las marcas." });
   }
 }
 

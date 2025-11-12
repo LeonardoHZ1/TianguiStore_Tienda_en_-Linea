@@ -113,7 +113,7 @@ async function vaciarCarrito(req, res) {
 
   try {
     await carritoModel.vaciarCarritoPorUsuario(usuario_id);
-    return res.json({ mensaje: "Carrito vaciado correctamente." });
+    return res.json({ mensaje: "El Carrito se ah vaciado correctamente." });
   } catch (error) {
     console.error("❌ Error al vaciar el carrito:", error);
     return res.status(500).json({ mensaje: "Error interno al vaciar el carrito." });
@@ -126,3 +126,7 @@ module.exports = {
   eliminarDelCarrito,
   vaciarCarrito
 };
+
+
+
+//Fin del archivo

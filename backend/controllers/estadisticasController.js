@@ -54,8 +54,8 @@ module.exports.obtenerEstadisticasVentas = async (req, res) => {
       ingresosTotales,
     });
   } catch (error) {
-    console.error('Error al obtener estadísticas de ventas:', error);
-    res.status(500).json({ mensaje: 'Error al obtener estadísticas de ventas' });
+    console.error('Error al obtener las estadísticas de ventas:', error);
+    res.status(500).json({ mensaje: 'Error al obtener las estadísticas de ventas' });
   }
 };
 
