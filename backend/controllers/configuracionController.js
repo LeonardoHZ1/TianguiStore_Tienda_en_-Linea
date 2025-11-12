@@ -31,7 +31,7 @@ async function obtenerConfiguracionPorClave(req, res) {
     const config = await configuracionModel.obtenerConfiguracionPorClave(clave);
 
     if (!config) {
-      return res.status(404).json({ message: "Configuración no encontrada." });
+      return res.status(404).json({ message: "La configuración no ah sido encontrada." });
     }
 
     res.status(200).json(config);
@@ -120,3 +120,7 @@ module.exports = {
   obtenerConfiguracionPorClave,
   actualizarConfiguracion
 };
+
+
+
+//Fin del archivo
