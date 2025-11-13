@@ -1,4 +1,4 @@
-<!-- 📁 login.html - Página de inicio de sesión TianguiStore -->
+<!-- 📁 login.html - Página de inicio de sesión TianguiStore (versión mejorada) -->
 <!DOCTYPE html>
 <html lang="es-MX">
 <head>
@@ -6,14 +6,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Iniciar Sesión | TianguiStore</title>
 
-  <!-- MaterializeCSS -->
+  <!-- 📦 MaterializeCSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
-  <!-- FontAwesome -->
+  <!-- 🌐 FontAwesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <!-- Animaciones -->
+  <!-- ✨ Animaciones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <!-- Estilos personalizados -->
+  <!-- 🎨 Estilos base -->
   <link rel="stylesheet" href="estilo/main.css" />
+
+  <!-- 💅 Estilo visual personalizado -->
+  <style>
+    body.dark-theme {
+      background: radial-gradient(circle at top left, #0a0f17, #141a26, #1c2736);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #f5f5f5;
+      transition: background 0.5s ease;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .formulario-wrapper {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .intro-title {
+      font-weight: 600;
+      color: #ffca28;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 8px rgba(255, 202, 40, 0.5);
+    }
+
+    .input-field input {
+      color: #fff !important;
+      border-bottom: 1px solid #ffca28 !important;
+    }
+
+    .input-field input:focus {
+      border-bottom: 2px solid #ffa726 !important;
+      box-shadow: 0 1px 0 0 #ffa726 !important;
+    }
+
+    .input-field .prefix {
+      color: #ffca28 !important;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.8rem;
+      cursor: pointer;
+      color: #ccc;
+      transition: color 0.3s ease;
+    }
+
+    .toggle-password:hover {
+      color: #ffca28;
+    }
+
+    .btn-auth {
+      background: linear-gradient(90deg, #ffca28, #ffb300);
+      color: #212121;
+      font-weight: bold;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 202, 40, 0.4);
+    }
+
+    .btn-auth:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 16px rgba(255, 202, 40, 0.5);
+    }
+
+    .section a {
+      transition: color 0.3s ease;
+    }
+
+    .section a:hover {
+      color: #ffca28 !important;
+    }
+
+    #mensajeError, #mensajeExito {
+      border-radius: 12px;
+      margin-top: 1.2rem;
+    }
+
+    @media (max-width: 480px) {
+      .formulario-wrapper {
+        margin: 1rem;
+        padding: 1.8rem;
+      }
+    }
+  </style>
 </head>
 
 <body class="dark-theme">
@@ -34,15 +137,15 @@
     <form id="loginForm" novalidate>
       <!-- 📧 Correo -->
       <div class="input-field">
-        <i class="fas fa-envelope prefix white-text"></i>
+        <i class="fas fa-envelope prefix"></i>
         <input type="email" id="email" class="validate" required autocomplete="email" />
         <label for="email">Correo Electrónico</label>
         <span class="helper-text" data-error="Correo inválido"></span>
       </div>
 
       <!-- 🔒 Contraseña -->
-      <div class="input-field">
-        <i class="fas fa-lock prefix white-text"></i>
+      <div class="input-field" style="position: relative;">
+        <i class="fas fa-lock prefix"></i>
         <input type="password" id="password" class="validate" required autocomplete="current-password" />
         <label for="password">Contraseña</label>
         <a id="togglePassword" class="toggle-password" title="Mostrar/Ocultar contraseña">

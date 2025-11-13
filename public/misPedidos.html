@@ -1,4 +1,4 @@
-<!-- 📁 misPedidos.html - TianguiStore -->
+<!-- 📁 misPedidos.html - TianguiStore (Versión Mejorada UI) -->
 <!DOCTYPE html>
 <html lang="es-MX">
 <head>
@@ -7,72 +7,142 @@
   <title>Mis Pedidos | TianguiStore</title>
 
   <!-- Frameworks -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <!-- Estilo personalizado -->
   <link rel="stylesheet" href="estilo/main.css" />
+
+  <style>
+    body {
+      background: #121212;
+      color: #fff;
+    }
+
+    .pedidos-header {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-pedido {
+      background: #1e1e1e;
+      border-radius: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card-pedido:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(255, 193, 7, 0.2);
+    }
+
+    .pedido-estado {
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+
+    .estado-entregado {
+      background: #2e7d32;
+      color: #fff;
+    }
+
+    .estado-pendiente {
+      background: #fbc02d;
+      color: #000;
+    }
+
+    .estado-cancelado {
+      background: #c62828;
+      color: #fff;
+    }
+
+    .pedido-detalle {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .btn-detalle {
+      background: linear-gradient(90deg, #ffb300, #ff8f00);
+      color: #000;
+      border-radius: 10px;
+    }
+
+    .btn-detalle:hover {
+      background: linear-gradient(90deg, #ffca28, #ffa000);
+    }
+  </style>
 </head>
 
-<body class="grey darken-4 white-text d-flex flex-column min-vh-100 animate__animated animate__fadeIn">
+<body class="animate__animated animate__fadeIn">
 
   <!-- 🔝 Navbar -->
-  <header id="navbar-container" role="banner"></header>
+  <header id="navbar-container"></header>
 
   <!-- 📦 Contenido principal -->
-  <main class="container my-4" role="main">
-    <section class="section center-align">
+  <main class="container">
+    <section class="center-align pedidos-header">
       <h4 class="amber-text text-accent-3">
-        <i class="fas fa-box-open" aria-hidden="true"></i> Mis Pedidos
+        <i class="fas fa-box-open"></i> Mis Pedidos
       </h4>
-      <p class="grey-text text-lighten-1">Consulta los pedidos que has realizado y su estado actual.</p>
+      <p class="grey-text text-lighten-1">
+        Aquí puedes revisar tus compras recientes, su estado actual y detalles de envío 📦
+      </p>
     </section>
 
-    <!-- 🧾 Tabla responsive -->
-    <div class="card-panel grey darken-3 z-depth-2 animate__animated animate__fadeInUp">
-      <div class="responsive-table">
-        <table class="striped highlight centered white-text" aria-label="Listado de pedidos">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Total</th>
-              <th>Usuario</th>
-              <th>Productos</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-pedidos">
-            <!-- Cargado dinámicamente por misPedidos.js -->
-          </tbody>
-        </table>
+    <!-- 🧾 Tarjetas dinámicas de pedidos -->
+    <div id="lista-pedidos" class="row">
+      <!-- Estos se generan dinámicamente con misPedidos.js -->
+      <!-- Ejemplo visual -->
+      <div class="col s12 m6 l4">
+        <div class="card card-pedido animate__animated animate__fadeInUp">
+          <div class="card-content">
+            <span class="card-title amber-text text-lighten-1">
+              <i class="fas fa-receipt"></i> Pedido #1043
+            </span>
+            <p><strong>Fecha:</strong> 12/11/2025</p>
+            <p><strong>Total:</strong> $499.00 MXN</p>
+            <p><strong>Usuario:</strong> leonardo_hz</p>
+            <div class="pedido-estado estado-entregado">
+              <i class="fas fa-check-circle"></i> Entregado
+            </div>
+            <div class="pedido-detalle">
+              <p><i class="fas fa-box"></i> 3 productos</p>
+            </div>
+          </div>
+          <div class="card-action center-align">
+            <button class="btn btn-detalle waves-effect waves-light modal-trigger" href="#modalDetalleProductos">
+              Ver Detalles
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
-  <!-- 🔍 Modal de detalle -->
-  <div id="modalDetalleProductos" class="modal modal-fixed-footer" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-productos">
-    <div class="modal-content grey darken-4 white-text">
-      <h5 id="titulo-modal-productos" class="amber-text text-accent-3">
-        <i class="fas fa-boxes" aria-hidden="true"></i> Productos del Pedido
+  <!-- 🔍 Modal Detalle -->
+  <div id="modalDetalleProductos" class="modal modal-fixed-footer grey darken-4 white-text">
+    <div class="modal-content">
+      <h5 class="amber-text text-accent-3">
+        <i class="fas fa-boxes"></i> Productos del Pedido
       </h5>
       <div id="detalle-productos-contenido" class="row">
-        <!-- Contenido generado dinámicamente -->
+        <p class="grey-text">Cargando detalles del pedido...</p>
       </div>
     </div>
     <div class="modal-footer grey darken-3">
-      <button class="modal-close waves-effect btn-flat white-text" aria-label="Cerrar modal">Cerrar</button>
+      <button class="modal-close waves-effect btn-flat white-text">Cerrar</button>
     </div>
   </div>
 
   <!-- 🔚 Footer -->
-  <footer id="footer-container" class="mt-auto" role="contentinfo"></footer>
+  <footer id="footer-container" class="page-footer grey darken-4"></footer>
 
   <!-- 🧠 Scripts -->
   <script src="scripts/loadComponent.js" defer></script>
   <script src="scripts/misPedidos.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
 </body>
 </html>
