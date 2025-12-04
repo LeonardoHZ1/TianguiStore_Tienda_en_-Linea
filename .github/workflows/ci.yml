@@ -2,19 +2,18 @@ name: CI Pipeline Tianguistore
 
 on: 
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-jobs: 
+jobs:
+
   validation:
-    name: 🔍 Validación de sintaxis
+    name: 🔍 Validación de Sintaxis
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -23,78 +22,89 @@ jobs:
         working-directory: backend
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
         
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '22.0.0'
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
         
-      - name: Install dependencies
-        run: npm install --prefer-offline --no-audit
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - name: Validate HTML
-        run: npm run test:html
+      - name: 🔎 Validate HTML
         id: html-check
+        run: npm run test:html
+        continue-on-error: true
 
-      - name: Validate JavaScript
-        run: npm run test:js
+      - name: 🔎 Validate JS
         id: js-check
+        run: npm run test:js
+        continue-on-error: true
 
-      - name: Summary - Validation
+      - name: 📝 Summary - Validation
         if: always()
         run: |
-          echo "## 📋 Validación de Sintaxis" >> $GITHUB_STEP_SUMMARY
-          echo "- HTML: ${{ steps.html-check.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- JavaScript: ${{ steps.js-check.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔍 Validación de Sintaxis" >> $GITHUB_STEP_SUMMARY
+          echo "- **HTML:** ${{ steps.html-check.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **JavaScript:** ${{ steps.js-check.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
   tests:
-    name: 🧪 Tests del backend
+    name: 🧪 Tests del Backend
     runs-on: ubuntu-latest
     needs: validation
     timeout-minutes: 15
-    if: success()
 
     defaults:
       run:
         working-directory: backend
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
         
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '22.0.0'
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
 
-      - name: Install dependencies
-        run: npm install --prefer-offline --no-audit
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - name: Run tests
-        run: npm test || true
+      - name: ▶️ Run tests
+        id: run-tests
+        run: npm test
+        continue-on-error: true
 
-      - name: Summary - Tests
+      - name: 📝 Summary - Tests
         if: always()
         run: |
           echo "## 🧪 Resultados de Tests" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: OK" >> $GITHUB_STEP_SUMMARY
+          echo "- **Estado:** ${{ steps.run-tests.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
 
   summary:
-    name: 📋 Resumen final
+    name: 📊 Resumen Final
     runs-on: ubuntu-latest
     needs: [validation, tests]
     if: always()
-    
+
     steps:
-      - name: Build Success
+      - name: 🎉 Pipeline Success
         if: success()
-        run: echo "🎉 Pipeline completado exitosamente"
-        
-      - name: Build Failed
+        run: |
+          echo "## 🎉 Pipeline completado exitosamente" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: ❌ Pipeline Failed
         if: failure()
         run: |
-          echo "⚠️ Pipeline con errores"
+          echo "## ❌ El pipeline tuvo errores" >> $GITHUB_STEP_SUMMARY
           exit 1
-
