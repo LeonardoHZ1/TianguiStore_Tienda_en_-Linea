@@ -7,30 +7,33 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs: 
   backend-tests:
     runs-on: ubuntu-latest
 
-    #Todos los comandos 'run' se ejecutaran dentro de la carpeta backend
+    
     defaults:
       run:
         working-directory: backend
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
+
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: '22.0.0'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: backend/package-lock.json
-      - name: Instalar depencias
+
+      - name: Instalar dependencias
         run: npm ci || npm install
 
       - name: Ejecutar pruebas
-        run: npm test -if-present
-      
-      - name: Run linter
-        run: npm run lint -if-present
+        run: npm test --if-present
+
+      - name: Ejecutar linter
+        run: npm run lint --if-present
